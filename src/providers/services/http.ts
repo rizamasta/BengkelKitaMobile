@@ -7,16 +7,21 @@ export class http {
     protected url: any;
     head: any;
     constructor(public http: HttpClient, private transfer: FileTransfer) {
-        this.url = "/api/v1/";
+        this.url = window.location.href == "http://localhost:8100/" ? "/api/v1/" : "http://api.bengkelonline.id/v1/";
     }
 
     get(uri, data) {
+        console.log(data);
         this.head = {
             'Content-Type': 'application/json',
         }
         let getData;
         if (data != null && data != undefined && data != "") {
-            getData = "?" + this.getParameter(data);
+            try {
+                getData = "?" + this.getParameter(data);
+            } catch (error) {
+                getData = "";
+            }
         }
         else {
             getData = "";
