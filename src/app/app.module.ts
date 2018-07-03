@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { HeaderColor } from '@ionic-native/header-color';
 
 import { LocationPage } from '../pages/location/location';
 import { ContactPage } from '../pages/contact/contact';
@@ -50,6 +51,7 @@ import { Camera } from '@ionic-native/camera';
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    HeaderColor,
     http,
     AlertLoader,
     FileTransfer,
