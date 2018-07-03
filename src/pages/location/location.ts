@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-
+import { AlertLoader } from '../../providers/alert/AlertProvider';
 import { AddLocationPage } from '../location/addLocation';
 import { ListLocationPage } from '../location/listLocation';
 
@@ -202,9 +202,9 @@ export class LocationPage {
   ];
   @ViewChild('map') mapElement: ElementRef;
   map: any;
-  markers: any;
+  markers = [];
   buttonFabs: any;
-  constructor(public navCtrl: NavController, public platform: Platform, private geolocation: Geolocation) {
+  constructor(public navCtrl: NavController, public platform: Platform, private geolocation: Geolocation, private alert: AlertLoader) {
     this.buttonFabs = [
       { icon: 'add', component: AddLocationPage, color: 'secondary' },
       { icon: 'list', component: ListLocationPage, color: 'danger' }
@@ -229,7 +229,15 @@ export class LocationPage {
       this.setMapOnAll(this.map);
     });
   }
-
+  setCenter() {
+    if (location.lat && location.lon) {
+      let locate = new google.maps.LatLng(location.lat, location.lon);
+      this.map.setCenter(locate);
+    }
+    else {
+      this.alert.presentAlert('Error', 'Failed get your location').present();
+    }
+  }
   initMap() {
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       zoom: 14,
@@ -240,9 +248,9 @@ export class LocationPage {
     });
   };
 
-  setMarker(location) {
+  setMarker(loc) {
     let marker = new google.maps.Marker({
-      position: location,
+      position: loc,
       map: this.map,
       icon: { url: 'assets/imgs/marker.png', scaledSize: new google.maps.Size(15, 15) }
     });

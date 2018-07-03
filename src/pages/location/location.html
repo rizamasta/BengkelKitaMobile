@@ -12,9 +12,9 @@
       <button ion-fab *ngFor="let b of buttonFabs" (click)="openPage(b)" color="{{b.color}}">
         <ion-icon name="{{b.icon}}"></ion-icon>
       </button>
-      <!-- <button ion-fab color='danger' (click)="openPage('ListLocationPage')">
-        <ion-icon name="list"></ion-icon>
-      </button> -->
+      <button ion-fab color='light' (click)="setCenter()">
+        <ion-icon name="locate"></ion-icon>
+      </button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>

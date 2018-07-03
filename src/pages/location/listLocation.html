@@ -1,7 +1,10 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar color='red'>
         <ion-title>List of Location</ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content padding>
+    <ion-item *ngFor="let item of listLocation">
+        {{item}}
+    </ion-item>
 </ion-content>
