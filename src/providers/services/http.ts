@@ -7,35 +7,25 @@ export class http {
     protected url: any;
     head: any;
     constructor(public http: HttpClient, private transfer: FileTransfer) {
-        this.url = this.getUrl();
+        this.url = "/api/v1/";
     }
 
     get(uri, data) {
         this.head = {
             'Content-Type': 'application/json',
-            // 'comp-id': data.compID
         }
-        if (data.token) {
-            this.head = {
-                'Content-Type': 'application/json',
-                // 'comp-id': data.compID,
-                // 'x-access-token': data.token
-            };
+        let getData;
+        if (data != null && data != undefined && data != "") {
+            getData = "?" + this.getParameter(data);
         }
-        return this.http.get(this.url + uri, { headers: this.head });
-
+        else {
+            getData = "";
+        }
+        return this.http.get(this.url + uri + getData, { headers: this.head });
     }
     post(uri, data) {
         this.head = {
             'Content-Type': 'application/json',
-            // 'comp-id': data.compID
-        }
-        if (data.token) {
-            this.head = {
-                'Content-Type': 'application/json',
-                // 'comp-id': data.compID,
-                // 'x-access-token': data.token
-            };
         }
         return this.http.post(this.url + uri, JSON.stringify(data), {
             headers: this.head
@@ -45,41 +35,10 @@ export class http {
     put(uri, data) {
         this.head = {
             'Content-Type': 'application/json',
-            // 'comp-id': data.compID
-        }
-        if (data.token) {
-            this.head = {
-                'Content-Type': 'application/json',
-                // 'comp-id': data.compID,
-                // 'x-access-token': data.token
-            };
         }
         return this.http.put(this.url + uri, JSON.stringify(data), { headers: this.head });
     }
 
-    testPost(uri, data) {
-        this.head = {
-            'Content-Type': 'application/json',
-            // 'comp-id': data.compID
-        }
-        if (data.token) {
-            this.head = {
-                'Content-Type': 'application/json',
-                // 'comp-id': data.compID,
-                // 'x-access-token': data.token
-            };
-        }
-        return this.http.post(uri, JSON.stringify(data), { headers: this.head });
-    }
-    private getUrl() {
-        // var u = window.location.href;
-        // if (u == "http://localhost:8100/") {
-        //     return "/api/v1/";
-        // }
-        // else {
-        return "/api/v1/";
-        // }
-    }
     uploadFile(data, api_uri) {
         const fileTransfer: FileTransferObject = this.transfer.create();
         let options: FileUploadOptions = {
@@ -93,6 +52,11 @@ export class http {
             }
         }
         return fileTransfer.upload(data.file_uri, this.url + api_uri, options);
+    }
+    getParameter(data) {
+        return Object.keys(data).map(function (k) {
+            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
+        }).join('&')
     }
 
 }
