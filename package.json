@@ -26,6 +26,7 @@
     "@ionic-native/file": "^4.9.0",
     "@ionic-native/file-transfer": "^4.9.0",
     "@ionic-native/geolocation": "^4.9.0",
+    "@ionic-native/header-color": "^4.9.0",
     "@ionic-native/splash-screen": "4.7.0",
     "@ionic-native/status-bar": "4.7.0",
     "@ionic/pro": "1.0.20",
@@ -33,6 +34,7 @@
     "cordova-android": "^7.1.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-geolocation": "^4.0.1",
+    "cordova-plugin-headercolor": "^1.0.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.1.19",
     "cordova-plugin-splashscreen": "^5.0.2",
@@ -58,7 +60,8 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "To access your location and suggest the near by"
-      }
+      },
+      "cordova-plugin-headercolor": {}
     },
     "platforms": [
       "android"
