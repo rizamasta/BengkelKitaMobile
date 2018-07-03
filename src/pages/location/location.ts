@@ -225,7 +225,6 @@ export class LocationPage {
       this.deleteMarkers();
       let updatelocation = new google.maps.LatLng(location.lat, location.lon);
       this.setMarker(updatelocation);
-      this.map.setCenter(updatelocation);
       this.setMapOnAll(this.map);
     });
   }
