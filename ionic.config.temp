@@ -1,0 +1,14 @@
+{
+  "name": "mobile",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  },
+  "proxies": [
+    {
+      "path": "/api/v1/",
+      "proxyUrl": "http://api.bengkelonline.id/v1/"
+    }
+  ]
+}
