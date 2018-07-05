@@ -4,7 +4,18 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <ion-item *ngFor="let item of listLocation">
-        {{item}}
-    </ion-item>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-list show-delete="false" can-swipe="true">
+        <ion-item *ngFor="let item of listLocation" (click)="openAction(item.uid)">
+            <h3 [innerHTML]=item.name></h3>
+            <p [innerHTML]=item.address></p>
+        </ion-item>
+    </ion-list>
+    <ion-fab right bottom>
+        <button ion-fab mini color='secondary' (click)="addLocation()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
 </ion-content>

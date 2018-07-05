@@ -1,10 +1,10 @@
 <ion-header>
     <ion-navbar color='red'>
-        <ion-title>Add Location</ion-title>
+        <ion-title>Detail Location</ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <form [formGroup]="form" (submit)="saveLocation()">
+    <form [formGroup]="form" (submit)="updateLocation()">
         <div #map2 id="map2" style="margin: -16px !important;margin-bottom: 15px !important;height: 350px; background: #afabab"></div>
         <ion-item>
             <ion-label color="dark" stacked>Name

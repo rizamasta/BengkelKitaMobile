@@ -6,12 +6,12 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 export class http {
     protected url: any;
     head: any;
+    apiKey = "AIzaSyB5e-OvpK1ndYFeAfcdu256yZWBg2cfMEg";
     constructor(public http: HttpClient, private transfer: FileTransfer) {
         this.url = window.location.href == "http://localhost:8100/" ? "/api/v1/" : "http://api.bengkelonline.id/v1/";
     }
 
     get(uri, data) {
-        console.log(data);
         this.head = {
             'Content-Type': 'application/json',
         }
@@ -63,5 +63,10 @@ export class http {
             return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
         }).join('&')
     }
-
+    getAddressName(lat, lng) {
+        this.head = {
+            'Content-Type': 'application/json',
+        }
+        return this.http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=" + this.apiKey);
+    }
 }

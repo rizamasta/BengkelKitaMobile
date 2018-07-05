@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, enableProdMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -9,6 +9,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { AboutPage } from '../pages/about/about';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AddLocationPage } from '../pages/location/addLocation';
+import { EditLocationPage } from '../pages/location/editLocation';
 import { ListLocationPage } from '../pages/location/listLocation';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -21,12 +22,13 @@ import { http } from '../providers/services/http';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
-
+enableProdMode();
 @NgModule({
   declarations: [
     MyApp,
     LocationPage,
     AddLocationPage,
+    EditLocationPage,
     ListLocationPage,
     ContactPage,
     AboutPage,
@@ -42,6 +44,7 @@ import { Camera } from '@ionic-native/camera';
     MyApp,
     LocationPage,
     AddLocationPage,
+    EditLocationPage,
     ListLocationPage,
     ContactPage,
     AboutPage,

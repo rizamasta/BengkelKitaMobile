@@ -1,15 +1,15 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, Platform, NavParams } from 'ionic-angular';
 import { http } from '../../providers/services/http';
 import { AlertLoader } from '../../providers/alert/AlertProvider';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation';
 declare var google: any;
 @Component({
-    selector: 'page-addLocation',
-    templateUrl: 'addLocation.html'
+    selector: 'page-editLocation',
+    templateUrl: 'editLocation.html'
 })
-export class AddLocationPage {
+export class EditLocationPage {
     @ViewChild('map2') mapElement: ElementRef;
     form: FormGroup;
     map: any;
@@ -37,8 +37,10 @@ export class AddLocationPage {
             }
         ]
     };
+    uid = "";
     constructor(
         public navCtrl: NavController,
+        private navParams: NavParams,
         private alert: AlertLoader,
         private httpc: http,
         private formBuilder: FormBuilder,
@@ -50,6 +52,8 @@ export class AddLocationPage {
             address: ['Fill the full address', Validators.required]
         });
         this.platform.ready().then(() => {
+            this.uid = this.navParams.data.uid;
+            this.getListLocation(this.uid);
             this.initMap();
             this.setCenter();
             this.initial();
@@ -59,7 +63,7 @@ export class AddLocationPage {
     initMap() {
         this.map = new google.maps.Map(this.mapElement.nativeElement, {
             zoom: 14,
-            center: { lat: -6.243871, lng: 106.7247318 },
+            center: { lat: this.dataLocation.latitude, lng: this.dataLocation.longitude },
             disableDefaultUI: true,
             zoomControl: true,
         });
@@ -129,20 +133,34 @@ export class AddLocationPage {
         this.markers = [];
     }
 
-    saveLocation() {
-        this.httpc.post('location', this.dataLocation).subscribe(dt => {
+    updateLocation() {
+        console.log(this.dataLocation);
+        this.httpc.put('location/' + this.uid, this.dataLocation).subscribe(dt => {
             var res: any;
             res = dt;
             if (res.status == 200) {
-                this.alert.presentConfirm(this.optAddMore).present();
+                this.alert.presentAlert('Updated', "Success update data!").present();
             }
             else {
                 this.alert.presentAlert('Failed Save', res.display_message).present();
             }
         }, err => {
-            console.log(err);
             this.alert.presentAlert('Failed Save', 'We try process your request, but we just got an error. Please try again.').present();
         })
+    }
+
+    getListLocation(id) {
+        this.httpc.get('location/' + id, "").subscribe(
+            data => {
+                let res: any;
+                res = data;
+                this.dataLocation = res.data;
+            },
+            error => {
+                console.log(JSON.stringify(error));
+                this.alert.presentAlert('Failed get data', 'Please try again!').present();
+            }
+        );
     }
 
     convertName() {

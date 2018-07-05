@@ -14,6 +14,7 @@ declare var location: any;
 })
 export class LocationPage {
   usersLocation: any;
+  callBackCount = 0;
   mapStyle = [
     {
       "elementType": "geometry",
@@ -212,6 +213,9 @@ export class LocationPage {
     platform.ready().then(() => {
       this.initMap();
       this.getLocation();
+      setTimeout(() => {
+        this.setCenter();
+      }, 2000);
     });
 
 
@@ -227,14 +231,25 @@ export class LocationPage {
       this.setMarker(updatelocation);
       this.setMapOnAll(this.map);
     });
+
   }
   setCenter() {
     if (location.lat && location.lon) {
       let locate = new google.maps.LatLng(location.lat, location.lon);
       this.map.setCenter(locate);
+      this.callBackCount = 0;
     }
     else {
-      this.alert.presentAlert('Error', 'Failed get your location').present();
+      if (this.callBackCount < 5) {
+        setTimeout(() => {
+          this.setCenter();
+        }, 1000);
+        this.callBackCount += 1;
+      }
+      else {
+        this.alert.presentAlert('Failed Get Location', "we are sorry, but we can't get your location now").present();
+        this.callBackCount = 0;
+      }
     }
   }
   initMap() {
