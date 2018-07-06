@@ -40,6 +40,7 @@ export class ListLocationPage {
             refresher.complete();
         }, 2000);
     }
+
     getListLocation() {
         this.https.get('location', this.data).subscribe(
             data => {
@@ -53,10 +54,13 @@ export class ListLocationPage {
             }
         );
     }
+
     addLocation() {
         this.navCtrl.push(AddLocationPage);
     }
+
     openAction(id) {
+        this.locationID = id;
         this.actSheet.create({
             title: 'Action',
             buttons: [
@@ -82,12 +86,23 @@ export class ListLocationPage {
             ]
         }).present()
     }
+
     viewLocation(id) {
         this.navCtrl.push(EditLocationPage, { 'uid': id });
 
     }
-    deleteLocation(id) {
 
+    deleteLocation(id) {
+        this.https.del('location/' + id, '').subscribe(
+            () => {
+                this.alert.presentAlert('Success', 'Deleting data successfull.').present();
+                this.getListLocation();
+            },
+            error => {
+                console.log(JSON.stringify(error));
+                this.alert.presentAlert('Failed get data', 'Please try again!').present();
+            }
+        );
     }
 
 }
