@@ -22,6 +22,9 @@ import { http } from '../providers/services/http';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
+import { Network } from '@ionic-native/network';
+import { Toast } from '@ionic-native/toast';
+
 enableProdMode();
 @NgModule({
   declarations: [
@@ -61,7 +64,9 @@ enableProdMode();
     FileTransferObject,
     Geolocation,
     File,
-    Camera
+    Camera,
+    Network,
+    Toast
   ]
 })
 export class AppModule { }
