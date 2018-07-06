@@ -36,6 +36,14 @@ export class http {
             headers: this.head
         });
     }
+    del(uri) {
+        this.head = {
+            'Content-Type': 'application/json',
+        }
+        return this.http.delete(this.url + uri, {
+            headers: this.head
+        });
+    }
 
     put(uri, data) {
         this.head = {
