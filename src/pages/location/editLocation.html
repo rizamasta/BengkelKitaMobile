@@ -7,17 +7,21 @@
     <form [formGroup]="form" (submit)="updateLocation()">
         <div #map2 id="map2" style="margin: -16px !important;margin-bottom: 15px !important;height: 350px; background: #afabab"></div>
         <ion-item>
+            <ion-label color="dark" stacked>Edit</ion-label>
+            <ion-toggle formControlName="editable" color='secondary' [(ngModel)]="editable"></ion-toggle>
+        </ion-item>
+        <ion-item>
             <ion-label color="dark" stacked>Name
-                <span style="color:red">*</span>
+                <span style="color:red" *ngIf="editable">*</span>
             </ion-label>
-            <ion-input type="text" formControlName="name" [(ngModel)]="dataLocation.name"></ion-input>
+            <ion-input type="text" formControlName="name" [(ngModel)]="dataLocation.name" disabled="{{!editable}}"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label color="dark" stacked>Addres
-                <span style="color:red">*</span>
+                <span style="color:red" *ngIf="editable">*</span>
             </ion-label>
-            <ion-textarea formControlName="address" [(ngModel)]="dataLocation.address"></ion-textarea>
+            <ion-textarea formControlName="address" [(ngModel)]="dataLocation.address" disabled="{{!editable}}"></ion-textarea>
         </ion-item>
-        <button ion-button block type="submit" [disabled]="!form.valid">Save</button>
+        <button *ngIf="editable" ion-button block type="submit" [disabled]="!form.valid">update</button>
     </form>
 </ion-content>

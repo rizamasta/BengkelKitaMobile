@@ -19,6 +19,7 @@ export class EditLocationPage {
         latitude: 0,
         longitude: 0
     };
+    editable = false;
     latLng: any;
     markers = [];
     optAddMore = {
@@ -49,24 +50,41 @@ export class EditLocationPage {
     ) {
         this.form = this.formBuilder.group({
             name: ['Please fill the Location Name', Validators.required],
-            address: ['Fill the full address', Validators.required]
+            address: ['Fill the full address', Validators.required],
+            editable: ['', Validators.nullValidator]
         });
         this.platform.ready().then(() => {
             this.uid = this.navParams.data.uid;
             this.getListLocation(this.uid);
-            this.initMap();
-            this.setCenter();
-            this.initial();
         });
 
     }
-    initMap() {
+    initEditMap(lat, lng) {
         this.map = new google.maps.Map(this.mapElement.nativeElement, {
             zoom: 14,
-            center: { lat: this.dataLocation.latitude, lng: this.dataLocation.longitude },
+            center: { lat: parseFloat(lat), lng: parseFloat(lng) },
             disableDefaultUI: true,
             zoomControl: true,
         });
+    };
+    initMap() {
+        this.map = new google.maps.Map(this.mapElement.nativeElement, {
+            zoom: 14,
+            center: { lat: -6.243871, lng: 106.7247318 },
+            disableDefaultUI: true,
+            zoomControl: true,
+        });
+        this.geolocation.getCurrentPosition().then((resp) => {
+            this.dataLocation.latitude = resp.coords.latitude;
+            this.dataLocation.longitude = resp.coords.longitude;
+            let locate = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+            this.map.setCenter(locate);
+        }, (e) => {
+            this.alert.presentAlert('MAP Error', 'Failed get location');
+            let locate = new google.maps.LatLng(-6.243871, 106.7247318);
+            this.map.setCenter(locate);
+        })
+
     };
 
     initial() {
@@ -134,7 +152,6 @@ export class EditLocationPage {
     }
 
     updateLocation() {
-        console.log(this.dataLocation);
         this.httpc.put('location/' + this.uid, this.dataLocation).subscribe(dt => {
             var res: any;
             res = dt;
@@ -155,10 +172,19 @@ export class EditLocationPage {
                 let res: any;
                 res = data;
                 this.dataLocation = res.data;
+                this.initEditMap(this.dataLocation.latitude, this.dataLocation.longitude);
+                this.deleteMarkers();
+                let locate = new google.maps.LatLng(this.dataLocation.latitude, this.dataLocation.longitude);
+                this.setMarker(locate);
+                this.setMapOnAll(this.map);
+                this.map.setCenter(locate);
+                this.convertName();
+                this.initial();
             },
             error => {
-                console.log(JSON.stringify(error));
                 this.alert.presentAlert('Failed get data', 'Please try again!').present();
+                console.log(JSON.stringify(error));
+
             }
         );
     }
@@ -175,6 +201,7 @@ export class EditLocationPage {
             }
         }, (e) => {
             console.log(e);
+            this.initMap();
             this.dataLocation.address = "";
         });
     }
