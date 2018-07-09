@@ -91,7 +91,10 @@ export class ListLocationPage {
         this.navCtrl.push(EditLocationPage, { 'uid': id });
 
     }
-
+    deleteAction(id) {
+        this.locationID = id;
+        this.alert.presentConfirm(this.optDeleteLocation).present();
+    }
     deleteLocation(id) {
         this.https.del('location/' + id).subscribe(
             () => {

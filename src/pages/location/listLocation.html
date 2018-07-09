@@ -19,13 +19,20 @@
         </button>
     </ion-fab> -->
     <ion-list>
-        <ion-item-sliding *ngFor="let item of listLocation" #item>
+        <ion-item-sliding *ngFor="let item of listLocation" class="nopadding-attr">
             <ion-item>
                 <h3 [innerHTML]=item.name></h3>
                 <p [innerHTML]=item.address></p>
             </ion-item>
+            <ion-item-options side="left">
+                <button ion-button (click)="deleteAction(item.uid)">
+                    <ion-icon name="trash"></ion-icon>
+                </button>
+            </ion-item-options>
             <ion-item-options side="right">
-                <button ion-button (click)="openAction(item.uid)">More</button>
+                <button color='blue' ion-button (click)="viewLocation(item.uid)">
+                    <ion-icon name='more'></ion-icon>
+                </button>
             </ion-item-options>
         </ion-item-sliding>
     </ion-list>
