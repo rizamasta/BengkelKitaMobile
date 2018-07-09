@@ -4,7 +4,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 
 @Injectable()
 export class http {
-    protected url: any;
+    protected url = "http://api.bengkelonline.id/v1/";
     head: any;
     apiKey = "AIzaSyB5e-OvpK1ndYFeAfcdu256yZWBg2cfMEg";
     constructor(public http: HttpClient, private transfer: FileTransfer) {
@@ -12,13 +12,15 @@ export class http {
     }
 
     get(uri, data) {
+        let timestamp = new Date().getTime();
         this.head = {
             'Content-Type': 'application/json',
+            'Origin': '*',
         }
         let getData;
         if (data != null && data != undefined && data != "") {
             try {
-                getData = "?" + this.getParameter(data);
+                getData = "&" + this.getParameter(data);
             } catch (error) {
                 getData = "";
             }
@@ -26,7 +28,7 @@ export class http {
         else {
             getData = "";
         }
-        return this.http.get(this.url + uri + getData, { headers: this.head });
+        return this.http.get(this.url + uri + "?time=" + timestamp + getData, { headers: this.head });
     }
     post(uri, data) {
         this.head = {

@@ -121,7 +121,7 @@ export class EditLocationPage {
         let marker = new google.maps.Marker({
             position: loc,
             map: this.map,
-            icon: { url: 'assets/imgs/marker.png', scaledSize: new google.maps.Size(20, 20) },
+            icon: { url: 'assets/imgs/marker.png', scaledSize: new google.maps.Size(25, 25) },
             draggable: true
         });
         this.dataLocation.latitude = marker.getPosition().lat();
