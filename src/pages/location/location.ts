@@ -266,7 +266,7 @@ export class LocationPage {
     let marker = new google.maps.Marker({
       position: loc,
       map: this.map,
-      icon: { url: 'assets/imgs/marker.png', scaledSize: new google.maps.Size(15, 15) }
+      icon: { url: 'assets/imgs/marker.png', scaledSize: new google.maps.Size(25, 25) }
     });
     this.markers.push(marker);
   }
