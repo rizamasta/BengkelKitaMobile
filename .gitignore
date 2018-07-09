@@ -38,3 +38,4 @@ resources/ios
 resources/icon.psd.md5
 ionic.config.json
 src/index.html
+src/providers/services/http.ts
