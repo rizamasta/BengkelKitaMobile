@@ -3,19 +3,30 @@
         <ion-title>List of Location</ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content padding>
+<ion-content>
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    <ion-list show-delete="false" can-swipe="true">
+    <!-- <ion-list show-delete="false" can-swipe="true">
         <ion-item *ngFor="let item of listLocation" (click)="openAction(item.uid)">
             <h3 [innerHTML]=item.name></h3>
             <p [innerHTML]=item.address></p>
         </ion-item>
-    </ion-list>
-    <ion-fab right bottom>
+    </ion-list> -->
+    <!-- <ion-fab right bottom>
         <button ion-fab mini color='secondary' (click)="addLocation()">
             <ion-icon name="add"></ion-icon>
         </button>
-    </ion-fab>
+    </ion-fab> -->
+    <ion-list>
+        <ion-item-sliding *ngFor="let item of listLocation" #item>
+            <ion-item>
+                <h3 [innerHTML]=item.name></h3>
+                <p [innerHTML]=item.address></p>
+            </ion-item>
+            <ion-item-options side="right">
+                <button ion-button (click)="openAction(item.uid)">More</button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
 </ion-content>
