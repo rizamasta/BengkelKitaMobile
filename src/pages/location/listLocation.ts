@@ -93,7 +93,7 @@ export class ListLocationPage {
     }
 
     deleteLocation(id) {
-        this.https.del('location/' + id, '').subscribe(
+        this.https.del('location/' + id).subscribe(
             () => {
                 this.alert.presentAlert('Success', 'Deleting data successfull.').present();
                 this.getListLocation();
