@@ -22,8 +22,8 @@ export class MyApp {
       this.statusBar.backgroundColorByHexString('#731717');
       this.headerColor.tint("#961414");
       splashScreen.hide();
-      this.connecting();
-      this.disconnecting();
+      // this.connecting();
+      // this.disconnecting();
     });
   }
   connecting() {
